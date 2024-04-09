@@ -8,6 +8,9 @@ primary_region = 'yyz'
 
 [build]
 
+[env]
+  BODY_SIZE_LIMIT = "16777216"
+
 [http_service]
   internal_port = 3000
   force_https = true

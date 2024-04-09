@@ -1,4 +1,5 @@
 import { env } from '$env/dynamic/private';
+import { nanoid } from 'nanoid';
 import {
 	S3Client,
 	ListBucketsCommand,
@@ -8,10 +9,10 @@ import {
 import { Upload } from '@aws-sdk/lib-storage';
 
 const S3 = new S3Client({
-	region: 'auto',
+	region: env.AWS_REGION,
 	endpoint: env.AWS_ENDPOINT_URL_S3,
 	credentials: {
-		accessKeyId: env.AWS_AWS_ACCESS_KEY_ID,
+		accessKeyId: env.AWS_ACCESS_KEY_ID,
 		secretAccessKey: env.AWS_SECRET_ACCESS_KEY
 	},
 	forcePathStyle: true
@@ -29,15 +30,16 @@ export async function listObjects() {
 	return await S3.send(new ListObjectsV2Command({ Bucket: env.BUCKET_NAME }));
 }
 
-export async function upload() {
+export async function upload(file: File) {
+	const key = nanoid();
 	const upload = new Upload({
 		params: {
 			Bucket: env.BUCKET_NAME,
-			Key: 'file.json',
-			Body: 'fileStream'
+			Key: key,
+			Body: file,
+			ContentType: file.type
 		},
-		client: S3,
-		queueSize: 3
+		client: S3
 	});
 
 	upload.on('httpUploadProgress', (progress) => {
@@ -45,4 +47,6 @@ export async function upload() {
 	});
 
 	await upload.done();
+
+	return key;
 }
