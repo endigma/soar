@@ -1,9 +1,5 @@
-import { listObjects, upload } from '$lib/server/storage.js';
-import { fail, type Actions, type LoadEvent } from '@sveltejs/kit';
-
-export async function load(event: LoadEvent) {
-	return await listObjects();
-}
+import { upload } from '$lib/server/storage.js';
+import { fail, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	async upload(e) {

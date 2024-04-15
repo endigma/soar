@@ -2,7 +2,7 @@
 	const { data, form } = $props();
 	import { enhance } from '$app/forms';
 
-	let uploading = false;
+	let uploading = $state(false);
 </script>
 
 <h1>Welcome to Soar</h1>
