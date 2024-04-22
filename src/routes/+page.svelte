@@ -6,7 +6,6 @@
 </script>
 
 <h1>Welcome to Soar</h1>
-<p>There will be a file sharing service here, at some point</p>
 
 <form
 	action="?/upload"
