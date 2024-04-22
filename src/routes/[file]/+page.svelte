@@ -6,13 +6,13 @@
 </script>
 
 {#if embedType == 'image'}
-	<img class="block" src={data.presignedURL} alt="some random user uploaded that does not come with alt text" />
+	<img class="block" src={data.url} alt="some random user uploaded that does not come with alt text" />
 {:else if embedType == 'video'}
 	<!-- svelte-ignore a11y-media-has-caption -->
-	<video class="block" src={data.presignedURL}></video>
+	<video class="block" src={data.url}></video>
 {/if}
 
-<a href={data.presignedURL}>raw</a>
+<a href={data.url}>raw</a>
 
 <style>
 	.block {
