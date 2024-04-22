@@ -6,25 +6,22 @@ import { nanoid } from 'nanoid';
 
 export const actions: Actions = {
 	async upload(e) {
-		const data = await e.request.formData();
-
-		const file = data.get('file') as File;
+		const file = (await e.request.formData()).get('file') as File;
 
 		if (!file.name || file.name == 'undefined') {
-			console.log('no file');
 			return fail(500, { error: true, message: 'You must provide a file' });
 		}
 
 		const key = nanoid() + '_' + file.name;
 
 		const upload = new Upload({
+			client: S3,
 			params: {
 				Bucket: env.BUCKET_NAME,
 				Key: key,
 				Body: file,
-				ContentType: file.type
-			},
-			client: S3
+				ContentType: file.type //
+			}
 		});
 
 		await upload.done();
