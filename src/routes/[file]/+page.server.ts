@@ -1,7 +1,8 @@
-import { getObject } from '$lib/server/storage';
+import { getObjectMetadata, getObjectSignedURL } from '$lib/server/storage';
 
 export async function load(e) {
-	let obj = await getObject(e.params.file);
-	obj.Body = undefined;
-	return obj;
+	const metadata = await getObjectMetadata(e.params.file);
+	const presignedURL = await getObjectSignedURL(e.params.file);
+
+	return { presignedURL, metadata };
 }
